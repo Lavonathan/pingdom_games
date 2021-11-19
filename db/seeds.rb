@@ -1,3 +1,5 @@
+# https://api.rawg.io/docs/#operation/games_list      << DOCUMENTATION ON API
+
 require "rubygems"
 require "json"
 
@@ -8,14 +10,31 @@ require "json"
       # https://rawg.io/api/games?page=1&publishers=muse-games&key=c542e67aec3a4340908f9de9e86038af
       # For the games, keep looping through to the next page until all "next" variables for the responses are null
 
+publishers_response = Faraday.get "https://rawg.io/api/publishers?page_size=10&page=1&key=c542e67aec3a4340908f9de9e86038af"
+
+if(publishers_response != nil)
+  publishers_body = publishers_response.body
+  publishers_items = JSON.parse(publishers_body)
+
+  publishers = publishers_items['results']
+
+  publishers.each do |publisher|
+    puts(publisher['name'])
+    # Find or create publisher with that name
+    # create the games for that publisher
+
+
+  end
+end
+
 
 
 
 ### Games
-response = Faraday.get "https://rawg.io/api/games?page=1&key=c542e67aec3a4340908f9de9e86038af"
+# games_response = Faraday.get "https://rawg.io/api/games?page=1&key=c542e67aec3a4340908f9de9e86038af"
 
-if(response != nil)
-  body = response.body
+if(games_response != nil)
+  body = games_response.body
   items = JSON.parse(body)
 
   games = items['results']
