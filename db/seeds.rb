@@ -3,6 +3,7 @@
 require "rubygems"
 require "json"
 
+Product.delete_all
 Publisher.delete_all
 
 ### Publishers
@@ -36,7 +37,7 @@ if(publishers_response != nil)
     # continue looping until the games items['next'] is nil
     ### Games
     game_page_size = 50
-    more_games = true
+    more_games = true # flag displaying that publisher has more games.
     page_num = 1
 
     while more_games == true
@@ -47,22 +48,57 @@ if(publishers_response != nil)
         body = games_response.body
         items = JSON.parse(body)
 
-        puts("Publisher has #{items['count']} games")
+        puts("#{publisher_name} has #{items['count']} games")
 
         games = items['results']
-        puts('creating games')
+        puts("creating games for #{publisher_name}.")
 
-        games.each do |game|
-          puts('name: ' + game['name'])
-          puts("publisher: #{publisher_name}" )
-          puts('id: ' + game['id'].to_s)
-          puts('game rating out of 5: ' + game['rating'].to_s)
-          puts('metacritic rating: ' + game['metacritic'].to_s)
+        games.each do |game_data|
+          game_name = game_data['name']
+          puts "   Creating game: #{game_name}."
+          game_id = game_data['id']
+          general_rating = game_data['rating'].to_d
+          metacritic_rating = game_data['metacritic'].to_d
+
+          # esrb rating
+          begin
+            esrb_rating = game_data['esrb_rating']['name'].to_s
+          rescue
+            esrb_rating = nil
+          ensure
+            puts("esrb_rating: #{esrb_rating} ")
+          end
+
+          # game image
+          begin
+            img_url = game_data['background_image']
+          rescue
+            img_url = nil
+          ensure
+            puts("img_url: #{img_url}")
+          end
+
+          # release date
+          begin
+            release_date = game_data['released'].to_s
+          rescue
+            release_date = nil
+          ensure
+            puts("released: #{release_date}")
+          end
+
+          # Only create the game if there is an associated release date.
+          if release_date.nil? || release_date.strip == ""
+            puts "No release date found for #{game_name}. Not including in product catalogue."
+          else
+            game = Product.find_or_create_by(name: game_name, game_id: game_id, general_rating: general_rating, publisher: publisher,
+                                        metacritic_rating: metacritic_rating, esrb_rating: esrb_rating, image: img_url, release_date: release_date)
+          end
 
           # platforms
           puts('Creating platforms: ')
           begin
-            platforms = game['platforms']
+            platforms = game_data['platforms']
             platforms.each do |platform|
               puts("    " + platform['platform']['name'])
             end
@@ -72,36 +108,9 @@ if(publishers_response != nil)
 
           # genres
           puts('creating genres: ')
-          genres = game['genres']
+          genres = game_data['genres']
           genres.each do |genre|
             puts("    " + genre['name'])
-          end
-
-          # esrb rating
-          begin
-            esrb_rating = game['esrb_rating']['name'].to_s
-          rescue
-            esrb_rating = "NONE"
-          ensure
-            puts("esrb_rating: #{esrb_rating} ")
-          end
-
-          # game image
-          begin
-            img_url = game['background_image']
-          rescue
-            img_url = "NONE"
-          ensure
-            puts("img_url: #{img_url}")
-          end
-
-          # release date
-          begin
-            release_date = game['released'].to_s
-          rescue
-            release_date = "UNRELEASED"
-          ensure
-            puts("released: #{release_date}")
           end
 
           puts('-------------------------------')
@@ -128,6 +137,7 @@ if(publishers_response != nil)
 end # publisher response
 
 puts "#{Publisher.all.count} Publishers have been created."
+puts "#{Product.all.count} Products have been created."
 
 
 
