@@ -3,6 +3,8 @@
 require "rubygems"
 require "json"
 
+Publisher.delete_all
+
 ### Publishers
   # Publisher URL: https://rawg.io/api/publishers?page=1&key=c542e67aec3a4340908f9de9e86038af
   # Search through the publisher URL and get a list of publishers Get the first 50 pages of publishers
@@ -25,9 +27,10 @@ if(publishers_response != nil)
   publishers.each do |publisher|
     publisher_name = publisher['name']
     publisher_slug = publisher['slug']
-    puts(publisher_name)
+    puts "Creating publisher #{publisher_name}."
 
-    # Find or create publisher with that name
+    # Find or create publisher with that name.
+    publisher = Publisher.find_or_create_by(name: publisher_name)
 
     # create the games for that publisher
     # continue looping until the games items['next'] is nil
@@ -51,6 +54,7 @@ if(publishers_response != nil)
 
         games.each do |game|
           puts('name: ' + game['name'])
+          puts("publisher: #{publisher_name}" )
           puts('id: ' + game['id'].to_s)
           puts('game rating out of 5: ' + game['rating'].to_s)
           puts('metacritic rating: ' + game['metacritic'].to_s)
@@ -123,7 +127,7 @@ if(publishers_response != nil)
   end # publishers loop
 end # publisher response
 
-
+puts "#{Publisher.all.count} Publishers have been created."
 
 
 
