@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_22_214242) do
+ActiveRecord::Schema.define(version: 2021_11_22_224733) do
+
+  create_table "platforms", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "product_platforms", force: :cascade do |t|
+    t.integer "platform_id", null: false
+    t.integer "product_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["platform_id"], name: "index_product_platforms_on_platform_id"
+    t.index ["product_id"], name: "index_product_platforms_on_product_id"
+  end
 
   create_table "products", force: :cascade do |t|
     t.string "name"
@@ -32,5 +47,7 @@ ActiveRecord::Schema.define(version: 2021_11_22_214242) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "product_platforms", "platforms"
+  add_foreign_key "product_platforms", "products"
   add_foreign_key "products", "publishers"
 end

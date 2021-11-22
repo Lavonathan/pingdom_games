@@ -3,6 +3,8 @@
 require "rubygems"
 require "json"
 
+ProductPlatform.delete_all
+Platform.delete_all
 Product.delete_all
 Publisher.delete_all
 
@@ -93,25 +95,32 @@ if(publishers_response != nil)
           else
             game = Product.find_or_create_by(name: game_name, game_id: game_id, general_rating: general_rating, publisher: publisher,
                                         metacritic_rating: metacritic_rating, esrb_rating: esrb_rating, image: img_url, release_date: release_date)
-          end
 
-          # platforms
-          puts('Creating platforms: ')
-          begin
-            platforms = game_data['platforms']
-            platforms.each do |platform|
-              puts("    " + platform['platform']['name'])
+            # platforms
+            puts('Creating platforms: ')
+            begin
+              platforms = game_data['platforms']
+              platforms.each do |platform|
+                platform_name = platform['platform']['name']
+
+                puts "Creating Platform: #{platform_name}." unless Platform.exists?(name: platform_name)
+
+                platform = Platform.find_or_create_by(name: platform_name)
+
+                # Create joiner table record for the product platform
+                ProductPlatform.find_or_create_by(product: game, platform: platform)
+              end
+            rescue
+              puts("    " + "NO PLATFORMS")
             end
-          rescue
-            puts("    " + "NO PLATFORMS")
-          end
 
-          # genres
-          puts('creating genres: ')
-          genres = game_data['genres']
-          genres.each do |genre|
-            puts("    " + genre['name'])
-          end
+            # genres
+            puts('creating genres: ')
+            genres = game_data['genres']
+            genres.each do |genre|
+              puts("    " + genre['name'])
+            end
+          end # Release date if
 
           puts('-------------------------------')
         end # games loop
@@ -138,6 +147,7 @@ end # publisher response
 
 puts "#{Publisher.all.count} Publishers have been created."
 puts "#{Product.all.count} Products have been created."
+puts "#{Platform.all.count} Platforms have been created."
 
 
 
