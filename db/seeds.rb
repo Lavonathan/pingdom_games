@@ -17,9 +17,17 @@ Genre.delete_all
       # https://rawg.io/api/games?page=1&publishers=muse-games&key=c542e67aec3a4340908f9de9e86038af
       # For the games, keep looping through to the next page until all "next" variables for the responses are null
 
+# Testing parameter. Set this when you are testing seeding.
+testing = true
+
 # Loop through a range of 1 - 10, changing the page number as you go for the publishers
-publisher_page_size = 1
-publisher_page_num = 2
+publisher_page_size = 50
+publisher_page_num = 1
+
+if testing == true
+  publisher_page_size = 1
+  publisher_page_num = 2
+end
 
 publishers_response = Faraday.get "https://rawg.io/api/publishers?page_size=#{publisher_page_size}&page=#{publisher_page_num}&key=c542e67aec3a4340908f9de9e86038af"
 
@@ -91,11 +99,15 @@ if(publishers_response != nil)
             puts("released: #{release_date}")
           end
 
+          # Faker for a generated product price.
+          price = Faker::Commerce.price(range: 60..98.99, as_string: true).to_d
+          puts "#{game_name} is selling for $#{price}."
+
           # Only create the game if there is an associated release date.
           if release_date.nil? || release_date.strip == ""
             puts "No release date found for #{game_name}. Not including in product catalogue."
           else
-            game = Product.find_or_create_by(name: game_name, game_id: game_id, general_rating: general_rating, publisher: publisher,
+            game = Product.find_or_create_by(name: game_name, game_id: game_id, general_rating: general_rating, publisher: publisher, price: price,
                                         metacritic_rating: metacritic_rating, esrb_rating: esrb_rating, image: img_url, release_date: release_date)
 
             # platforms
@@ -147,6 +159,11 @@ if(publishers_response != nil)
       rescue
         more_games = false
         puts("all games created for #{publisher_name}")
+      end
+
+      # Cut the loop early if you are testing.
+      if testing == true
+        more_games = false
       end
 
     end # while loop
