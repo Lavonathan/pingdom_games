@@ -3,10 +3,12 @@
 require "rubygems"
 require "json"
 
+ProductGenre.delete_all
 ProductPlatform.delete_all
 Platform.delete_all
 Product.delete_all
 Publisher.delete_all
+Genre.delete_all
 
 ### Publishers
   # Publisher URL: https://rawg.io/api/publishers?page=1&key=c542e67aec3a4340908f9de9e86038af
@@ -118,7 +120,14 @@ if(publishers_response != nil)
             puts('creating genres: ')
             genres = game_data['genres']
             genres.each do |genre|
-              puts("    " + genre['name'])
+              genre_name = genre['name']
+
+              puts "Creating Genre: #{genre_name}." unless Genre.exists?(name: genre_name)
+
+              genre = Genre.find_or_create_by(name: genre_name)
+
+              # Create joiner table record for the product genre.
+              ProductGenre.find_or_create_by(product: game, genre: genre)
             end
           end # Release date if
 
@@ -148,6 +157,7 @@ end # publisher response
 puts "#{Publisher.all.count} Publishers have been created."
 puts "#{Product.all.count} Products have been created."
 puts "#{Platform.all.count} Platforms have been created."
+puts "#{Genre.all.count} Genres have been created."
 
 
 

@@ -10,12 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_22_224733) do
+ActiveRecord::Schema.define(version: 2021_11_25_004006) do
+
+  create_table "genres", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "platforms", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "product_genres", force: :cascade do |t|
+    t.integer "genre_id", null: false
+    t.integer "product_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["genre_id"], name: "index_product_genres_on_genre_id"
+    t.index ["product_id"], name: "index_product_genres_on_product_id"
   end
 
   create_table "product_platforms", force: :cascade do |t|
@@ -47,6 +62,8 @@ ActiveRecord::Schema.define(version: 2021_11_22_224733) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "product_genres", "genres"
+  add_foreign_key "product_genres", "products"
   add_foreign_key "product_platforms", "platforms"
   add_foreign_key "product_platforms", "products"
   add_foreign_key "products", "publishers"

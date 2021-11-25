@@ -1,6 +1,4 @@
 TODO:
-  get platforms seeded
-  get genres seeded
   Add price to products
   Add users
   make sure active record is working
