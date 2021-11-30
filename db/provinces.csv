@@ -1,0 +1,14 @@
+name,PST,GST,HST,code
+Alberta,0,5,0,AB
+British Columbia,7,5,0,BC
+Manitoba,7,5,0,MB
+New Brunswick,0,0,15,NB
+Newfoundland and Labrador,0,0,15,NL
+Northwest Territories,0,5,0,NT
+Nova Scotia,0,0,15,NS
+Nunavut,0,5,0,NU
+Ontario,0,0,13,ON
+Prince Edward Island,0,0,15,PE
+Quebec,10,5,0,QC
+Saskatchewan,6,5,0,SK
+Yukon,0,5,0,YT

@@ -2,13 +2,34 @@
 
 require "rubygems"
 require "json"
+require "csv"
 
+Province.delete_all
 ProductGenre.delete_all
 ProductPlatform.delete_all
 Platform.delete_all
 Product.delete_all
 Publisher.delete_all
 Genre.delete_all
+
+### Creating the provinces
+csv_file = Rails.root.join("db/provinces.csv")
+csv_data = File.read(csv_file)
+provinces = CSV.parse(csv_data, headers: true, encoding: "utf-8")
+
+puts "Creating provinces . . . "
+provinces.each do |prov|
+  puts "#{prov['name']} is being created."
+
+  province = Province.create(
+    name:        prov["name"],
+    HST:         prov["HST"],
+    GST:         prov["GST"],
+    PST:         prov["PST"],
+    code:        prov["code"]
+  )
+  puts "Invalid province #{prov['name']}" unless province&.valid?
+end
 
 ### Publishers
   # Publisher URL: https://rawg.io/api/publishers?page=1&key=c542e67aec3a4340908f9de9e86038af
@@ -19,6 +40,7 @@ Genre.delete_all
 
 # Testing parameter. Set this when you are testing seeding.
 testing = true
+province_test = false
 
 # Loop through a range of 1 - 10, changing the page number as you go for the publishers
 publisher_page_size = 50
@@ -31,7 +53,7 @@ end
 
 publishers_response = Faraday.get "https://rawg.io/api/publishers?page_size=#{publisher_page_size}&page=#{publisher_page_num}&key=c542e67aec3a4340908f9de9e86038af"
 
-if(publishers_response != nil)
+if(publishers_response != nil && province_test == false)
   publishers_body = publishers_response.body
   publishers_items = JSON.parse(publishers_body)
 
@@ -47,7 +69,7 @@ if(publishers_response != nil)
 
     # create the games for that publisher
     # continue looping until the games items['next'] is nil
-    ### Games
+    ### Games (PRODUCTS)
     game_page_size = 50
     more_games = true # flag displaying that publisher has more games.
     page_num = 1
@@ -171,6 +193,7 @@ if(publishers_response != nil)
   end # publishers loop
 end # publisher response
 
+puts "#{Province.all.count} Provinces have been created."
 puts "#{Publisher.all.count} Publishers have been created."
 puts "#{Product.all.count} Products have been created."
 puts "#{Platform.all.count} Platforms have been created."

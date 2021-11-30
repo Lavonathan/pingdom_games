@@ -1,5 +1,18 @@
 TODO:
-  Add price to products
-  Add users
-  make sure active record is working
-
+  Create provinces table. It should have 3 columns: GST, PST, HST
+  Create the customers table. It should have first name, last name, phone, email, and address columns.
+  Create orders table. It should have a many to 1 relationship with customers
+  Create product orders table. It should have quantity and price
+  Make sure active admin is working for creating, editing, and deleting a product.
+  Take in an image in active record for a product
+  Add provinces to active admin to edit taxes (for marks)
+  Have a main page to view products. Make it paginated. Be able to navigate by at least one category.
+  Have a details page for products
+  Add user login with devise
+  Make provinces a dropdown for users when registering.
+  Get add to cart working
+  Make it so you can save all the items to orders without stripe
+  Make a place where you can see a customers order history
+  Create an order show page that you get to from the above.
+  Finish the cart functionality so that you can add multiple quantities of items.
+  Add stripe functionality.
