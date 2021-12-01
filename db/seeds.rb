@@ -4,6 +4,7 @@ require "rubygems"
 require "json"
 require "csv"
 
+Customer.delete_all
 Province.delete_all
 ProductGenre.delete_all
 ProductPlatform.delete_all
@@ -31,16 +32,29 @@ provinces.each do |prov|
   puts "Invalid province #{prov['name']}" unless province&.valid?
 end
 
+### Creating Test Customers
+Customer.create(first_name: "Lavon", last_name: "Edwards", full_name: "Lavon Edwards",
+                phone: "204-333-4444", address: "222 Test way", email: "fakemail@test.ca",
+                postal_code: "T2T0V5", province: Province.second())
+
+Customer.create(first_name: "Sue", last_name: "Dendrodium", full_name: "Sue Dendrodium",
+                phone: "204-111-4444", address: "333 Test way", email: "fakemail2@test.ca",
+                postal_code: "R2T0V7", province: Province.first())
+
+Customer.create(first_name: "Ben", last_name: "Bundleham", full_name: "Ben Bundleham",
+                phone: "204-444-1111", address: "555 Tacoville", email: "fakest_of_emails@test.ca",
+                postal_code: "Y4Y9V3", province: Province.third())
+
+# Testing parameters. Set this when you are testing seeding.
+testing = true
+province_test = true
+
 ### Publishers
   # Publisher URL: https://rawg.io/api/publishers?page=1&key=c542e67aec3a4340908f9de9e86038af
   # Search through the publisher URL and get a list of publishers Get the first 50 pages of publishers
   # Then looping through the 50 publishers, Search the game API for all the games by that publisher.
       # https://rawg.io/api/games?page=1&publishers=muse-games&key=c542e67aec3a4340908f9de9e86038af
       # For the games, keep looping through to the next page until all "next" variables for the responses are null
-
-# Testing parameter. Set this when you are testing seeding.
-testing = true
-province_test = false
 
 # Loop through a range of 1 - 10, changing the page number as you go for the publishers
 publisher_page_size = 50
@@ -198,7 +212,7 @@ puts "#{Publisher.all.count} Publishers have been created."
 puts "#{Product.all.count} Products have been created."
 puts "#{Platform.all.count} Platforms have been created."
 puts "#{Genre.all.count} Genres have been created."
-
+puts "#{Customer.all.count} Customers have been created."
 
 
 
