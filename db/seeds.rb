@@ -4,6 +4,7 @@ require "rubygems"
 require "json"
 require "csv"
 
+ProductOrder.delete_all
 Order.delete_all
 Customer.delete_all
 Province.delete_all
@@ -13,6 +14,10 @@ Platform.delete_all
 Product.delete_all
 Publisher.delete_all
 Genre.delete_all
+
+# Testing parameters. Set this when you are testing seeding.
+testing = true
+province_test = false
 
 ### Creating the provinces
 csv_file = Rails.root.join("db/provinces.csv")
@@ -45,13 +50,6 @@ Customer.create(first_name: "Sue", last_name: "Dendrodium", full_name: "Sue Dend
 Customer.create(first_name: "Ben", last_name: "Bundleham", full_name: "Ben Bundleham",
                 phone: "204-444-1111", address: "555 Tacoville", email: "fakest_of_emails@test.ca",
                 postal_code: "Y4Y9V3", province: Province.third())
-
-### Creating Test Order
-Order.create(order_no: 123, payment_amount_no_tax: 10.00, GST: 1.00, payment_total: 11.00, pay_date: Date.current, customer:Customer.second())
-
-# Testing parameters. Set this when you are testing seeding.
-testing = true
-province_test = true
 
 ### Publishers
   # Publisher URL: https://rawg.io/api/publishers?page=1&key=c542e67aec3a4340908f9de9e86038af
@@ -211,6 +209,23 @@ if(publishers_response != nil && province_test == false)
   end # publishers loop
 end # publisher response
 
+### Creating a Test Order
+test_product = Product.first()
+product_price = test_product.price
+product_quantity = 20
+payment_no_tax = product_price * product_quantity
+gst_amount = product_price * Customer.second().province.GST / 100
+hst_amount = product_price * Customer.second().province.HST / 100
+pst_amount = product_price * Customer.second().province.PST / 100
+payment_total = payment_no_tax + gst_amount + hst_amount + pst_amount
+
+test_order = Order.create(order_no: 123, payment_amount_no_tax: payment_no_tax, GST: gst_amount, HST: hst_amount, PST: pst_amount,
+             payment_total: payment_total, pay_date: Date.current, customer:Customer.second())
+
+### Creating test product order
+ProductOrder.create(product: test_product, order: test_order, quantity: product_quantity, price: product_price)
+
+
 puts "#{Province.all.count} Provinces have been created."
 puts "#{Publisher.all.count} Publishers have been created."
 puts "#{Product.all.count} Products have been created."
@@ -218,6 +233,7 @@ puts "#{Platform.all.count} Platforms have been created."
 puts "#{Genre.all.count} Genres have been created."
 puts "#{Customer.all.count} Customers have been created."
 puts "#{Order.all.count} Orders have been created."
+puts "#{ProductOrder.all.count} ProductOrders have been created."
 
 
 

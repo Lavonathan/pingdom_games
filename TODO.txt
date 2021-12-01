@@ -1,8 +1,4 @@
 TODO:
-  Create orders table. It should have a many to 1 relationship with customers
-  Create product orders table. It should have quantity and price
-
-
   Make sure active admin is working for creating, editing, and deleting a product.
   Take in an image in active record for a product
   Add provinces to active admin to edit taxes (for marks)
