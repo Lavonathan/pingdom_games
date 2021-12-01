@@ -4,6 +4,7 @@ require "rubygems"
 require "json"
 require "csv"
 
+Order.delete_all
 Customer.delete_all
 Province.delete_all
 ProductGenre.delete_all
@@ -44,6 +45,9 @@ Customer.create(first_name: "Sue", last_name: "Dendrodium", full_name: "Sue Dend
 Customer.create(first_name: "Ben", last_name: "Bundleham", full_name: "Ben Bundleham",
                 phone: "204-444-1111", address: "555 Tacoville", email: "fakest_of_emails@test.ca",
                 postal_code: "Y4Y9V3", province: Province.third())
+
+### Creating Test Order
+Order.create(order_no: 123, payment_amount_no_tax: 10.00, GST: 1.00, payment_total: 11.00, pay_date: Date.current, customer:Customer.second())
 
 # Testing parameters. Set this when you are testing seeding.
 testing = true
@@ -213,6 +217,7 @@ puts "#{Product.all.count} Products have been created."
 puts "#{Platform.all.count} Platforms have been created."
 puts "#{Genre.all.count} Genres have been created."
 puts "#{Customer.all.count} Customers have been created."
+puts "#{Order.all.count} Orders have been created."
 
 
 

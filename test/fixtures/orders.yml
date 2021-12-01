@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  order_no: 1
+  payment_amount_no_tax: 9.99
+  GST: 9.99
+  HST: 9.99
+  PST: 9.99
+  payment_total: 9.99
+  pay_date: 2021-12-01
+  customer: one
+
+two:
+  order_no: 1
+  payment_amount_no_tax: 9.99
+  GST: 9.99
+  HST: 9.99
+  PST: 9.99
+  payment_total: 9.99
+  pay_date: 2021-12-01
+  customer: two

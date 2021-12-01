@@ -1,5 +1,4 @@
 TODO:
-  Create the customers table. It should have first name, last name, phone, email, and address columns. references provinces.
   Create orders table. It should have a many to 1 relationship with customers
   Create product orders table. It should have quantity and price
 
