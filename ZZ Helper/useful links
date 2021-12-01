@@ -1,0 +1,7 @@
+Association basics: https://guides.rubyonrails.org/v3.2/association_basics.html
+Adding a column to an existing model: https://stackoverflow.com/questions/4834809/adding-a-column-to-an-existing-table-in-a-rails-migration
+Getting started with rails demo: https://guides.rubyonrails.org/getting_started.html
+RAWG videogame database API docs: https://api.rawg.io/docs/#operation/games_suggested_read
+Rawg website. Useful for testing API: https://rawg.io/search?query=halo
+Postman. Included below this is a test URL to use: https://web.postman.co/workspace/My-Workspace~ff23e4b2-b3bc-43d6-8e8e-0bb7ad554ea0/request/create?requestId=43aa3373-a72f-435b-a328-e1085f195d7a
+TEST URL: https://rawg.io/api/games?page_size=2&page=1&key=c542e67aec3a4340908f9de9e86038af
