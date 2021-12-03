@@ -16,6 +16,13 @@ ActiveAdmin.register Product do
     end
     f.actions         # adds the 'Submit' and 'Cancel' buttons
   end
+
+  show do
+    default_main_content
+    div do
+      product.image.present? ? image_tag(product.image) : "NO IMAGE 📷"
+    end
+  end
   #
   # or
   #
