@@ -146,7 +146,7 @@ if(publishers_response != nil && province_test == false)
             puts "No release date found for #{game_name}. Not including in product catalogue."
           else
             game = Product.find_or_create_by(name: game_name, game_id: game_id, general_rating: general_rating, publisher: publisher, price: price,
-                                        metacritic_rating: metacritic_rating, esrb_rating: esrb_rating, image: img_url, release_date: release_date)
+                                        metacritic_rating: metacritic_rating, esrb_rating: esrb_rating, image_url: img_url, release_date: release_date)
 
             # platforms
             puts('Creating platforms: ')
