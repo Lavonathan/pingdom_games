@@ -148,6 +148,12 @@ if(publishers_response != nil && province_test == false)
             game = Product.find_or_create_by(name: game_name, game_id: game_id, general_rating: general_rating, publisher: publisher, price: price,
                                         metacritic_rating: metacritic_rating, esrb_rating: esrb_rating, image_url: img_url, release_date: release_date)
 
+            ## Add image to product if available.
+            if(img_url != nil)
+              downloaded_image = URI.open(img_url)
+              game.image.attach(io: downloaded_image, filename: "m-#{game_name}_img.jpg")
+            end
+
             # platforms
             puts('Creating platforms: ')
             begin
