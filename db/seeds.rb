@@ -10,10 +10,10 @@ Customer.delete_all
 Province.delete_all
 ProductGenre.delete_all
 ProductPlatform.delete_all
-Platform.delete_all
+# Platform.delete_all
 Product.delete_all
 Publisher.delete_all
-Genre.delete_all
+# Genre.delete_all
 
 # Testing parameters. Set this when you are testing seeding.
 testing = true
@@ -190,6 +190,11 @@ if(publishers_response != nil && province_test == false)
         if items['next'] != nil
           page_num += 1
           sleep(1)
+
+          # Cut the loop early if you are testing.
+          if testing == true
+            more_games = false
+          end
         else
           more_games = false
           puts("all games created for #{publisher_name}")
@@ -197,11 +202,6 @@ if(publishers_response != nil && province_test == false)
       rescue
         more_games = false
         puts("all games created for #{publisher_name}")
-      end
-
-      # Cut the loop early if you are testing.
-      if testing == true
-        more_games = false
       end
 
     end # while loop
@@ -236,4 +236,6 @@ puts "#{Order.all.count} Orders have been created."
 puts "#{ProductOrder.all.count} ProductOrders have been created."
 
 
-
+# Active admin user creation.
+# AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+puts "#{AdminUser.all.count} Admin #{'user'.pluralize(AdminUser.all.count)}."
