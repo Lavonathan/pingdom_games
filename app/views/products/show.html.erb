@@ -1,6 +1,6 @@
 <h1><%= @product.name %></h1>
 <%= @image != nil ? image_tag(@image, :size => "260x180") : @product.name %>
-<h2>Published by: <%= @product.publisher.name %></h2>
+<h2>Published by: <%=link_to @product.publisher.name, @product.publisher %></h2>
 <h3><%= 'Platform'.pluralize(@product.platforms.count) %>:</h3>
 <ul>
   <% @product.platforms.each do | platform | %>
