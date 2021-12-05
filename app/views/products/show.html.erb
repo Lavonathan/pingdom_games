@@ -1,0 +1,15 @@
+<h1>Products#show</h1>
+<h1><%= @product.name %></h1>
+<h2>Published by: <%= @product.publisher.name %></h2>
+<h3><%= 'Platform'.pluralize(@product.platforms.count) %>:</h3>
+<ul>
+  <% @product.platforms.each do | platform | %>
+    <li> <%= link_to platform.name, platform %></li>
+  <% end %>
+</ul>
+<h3><%= 'Genre'.pluralize(@product.genres.count) %>:</h3>
+<ul>
+  <% @product.genres.each do | genre | %>
+    <li> <%= genre.name %></li>
+  <% end %>
+</ul>
