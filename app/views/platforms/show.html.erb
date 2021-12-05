@@ -1,6 +1,6 @@
 <h1><%= @platform.name %></h1>
 <hr>
-<h2>Games for the <%= @platform.name %></h2>
+<h2>Games on <%= @platform.name %></h2>
 <ul>
   <% @platform.products.each do | product | %>
     <li> <%= link_to product.name, product %></li>

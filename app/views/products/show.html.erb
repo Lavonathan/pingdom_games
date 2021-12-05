@@ -10,6 +10,6 @@
 <h3><%= 'Genre'.pluralize(@product.genres.count) %>:</h3>
 <ul>
   <% @product.genres.each do | genre | %>
-    <li> <%= genre.name %></li>
+    <li> <%= link_to genre.name, genre %></li>
   <% end %>
 </ul>
