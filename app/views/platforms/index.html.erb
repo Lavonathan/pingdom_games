@@ -1,2 +1,6 @@
-<h1>Platforms#index</h1>
-<p>Find me in app/views/platforms/index.html.erb</p>
+<h1>Platformss#index</h1>
+<ul>
+  <% @platforms.each do | platform | %>
+    <li> <%= link_to platform.name, platform %></li>
+  <% end %>
+</ul>
