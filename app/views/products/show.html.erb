@@ -1,5 +1,10 @@
 <h1><%= @product.name %></h1>
 <%= @image != nil ? image_tag(@image, :size => "260x180") : @product.name %>
+<% if @product.esrb_rating != nil %>
+  <h2>Rated: <%= @product.esrb_rating %> </h2>
+<% else %>
+  <h2>This game has no available rating.</h2>
+<% end %>
 <h2>Published by: <%=link_to @product.publisher.name, @product.publisher %></h2>
 <h3><%= 'Platform'.pluralize(@product.platforms.count) %>:</h3>
 <ul>
