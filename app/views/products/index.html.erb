@@ -1,4 +1,14 @@
-<h1>Products#index</h1>
+<h1>Hit Video Games</h1>
+
+<% if @search_value != "" && @search_value != nil %>
+  <h2>
+    Games Matching '<%= @search_value %>'
+    <% if @platform != nil %>
+      For the <%= @platform.name %>
+    <% end %>
+  </h2>
+<% end %>
+
 <ul>
   <% @products.each do | product | %>
     <li> <%= link_to product.name, product %></li>
