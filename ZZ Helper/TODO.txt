@@ -4,6 +4,7 @@ TODO:
   ✅ Add provinces to active admin to edit taxes (for marks)
   ✅ Get images uploaded for all products.
 
+  ✅ add is_numeric validations to models.
 
   ✅ Have a main page to view products.
   Make it paginated. Be able to navigate by at least one category.
