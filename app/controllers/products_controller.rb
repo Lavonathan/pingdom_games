@@ -11,14 +11,14 @@ class ProductsController < ApplicationController
       if params[:platform] != nil && params[:platform] != "Console"
         begin
           @platform = Platform.includes(:products).find(params[:platform])
-          @product_total = @platform.products.where("name LIKE ?", @wildcard_search)
+          @product_total = @platform.products.where("name LIKE ?", @wildcard_search).page(params[:page]).per(10)
         rescue
           @platform = nil
-          @product_total = Product.where("name LIKE ?", @wildcard_search)
+          @product_total = Product.where("name LIKE ?", @wildcard_search).page(params[:page]).per(10)
         end
       else
         @platform = nil
-        @product_total = Product.where("name LIKE ?", @wildcard_search)
+        @product_total = Product.where("name LIKE ?", @wildcard_search).page(params[:page]).per(10)
       end
 
       # If there is only one pokemon returned, go right to their show page.
