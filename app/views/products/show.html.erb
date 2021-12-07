@@ -5,6 +5,7 @@
 <% else %>
   <h2>This game has no available rating.</h2>
 <% end %>
+<h2>$<%= @product.price %></h2>
 <h2>Published by: <%=link_to @product.publisher.name, @product.publisher %></h2>
 <h3><%= 'Platform'.pluralize(@product.platforms.count) %>:</h3>
 <ul>
