@@ -7,6 +7,11 @@
 <% end %>
 <h2>$<%= @product.price %></h2>
 <h2>Published by: <%=link_to @product.publisher.name, @product.publisher %></h2>
+
+<% if @product.general_rating != nil %>
+  <h2>This game has a score of: <%= @product.general_rating %> / 5</h2>
+<% end %>
+
 <h3><%= 'Platform'.pluralize(@product.platforms.count) %>:</h3>
 <ul>
   <% @product.platforms.each do | platform | %>

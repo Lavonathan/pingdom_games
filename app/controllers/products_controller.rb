@@ -11,15 +11,15 @@ class ProductsController < ApplicationController
         begin
           @platform = Platform.includes(:products).find(params[:platform])
           @product_total = @platform.products.where("name LIKE ?",
-                                                    @wildcard_search).page(params[:page]).per(10)
+                                                    @wildcard_search).order("general_rating DESC").page(params[:page]).per(10)
         rescue StandardError
           @platform = nil
           @product_total = Product.where("name LIKE ?",
-                                         @wildcard_search).page(params[:page]).per(10)
+                                         @wildcard_search).order("general_rating DESC").page(params[:page]).per(10)
         end
       else
         @platform = nil
-        @product_total = Product.where("name LIKE ?", @wildcard_search).page(params[:page]).per(10)
+        @product_total = Product.where("name LIKE ?", @wildcard_search).order("general_rating DESC").page(params[:page]).per(10)
       end
 
       # If there is only one pokemon returned, go right to their show page.

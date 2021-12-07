@@ -5,5 +5,6 @@ class PlatformsController < ApplicationController
 
   def show
     @platform = Platform.includes(:products).find(params[:id])
+    @products = @platform.products.page(params[:page]).per(10)
   end
 end

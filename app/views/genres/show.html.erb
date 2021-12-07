@@ -1,7 +1,9 @@
 
 <h2><%= @genre.name %> Games</h2>
 <ul>
-  <% @genre.products.each do | product | %>
+  <% @products.each do | product | %>
     <li> <%= link_to product.name, product %></li>
   <% end %>
 </ul>
+
+<%= paginate @products %>

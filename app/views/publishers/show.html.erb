@@ -2,7 +2,9 @@
 <hr>
 <h2><%= @publisher.name %> Games</h2>
 <ul>
-  <% @publisher.products.each do | product | %>
+  <% @products.each do | product | %>
     <li> <%= link_to product.name, product %></li>
   <% end %>
 </ul>
+
+<%= paginate @products %>
