@@ -1,12 +1,16 @@
 <h1>Hit Video Games</h1>
 
 <% if @search_value != "" && @search_value != nil %>
-  <h2>
-    Games Matching '<%= @search_value %>'
-    <% if @platform != nil %>
-      For the <%= @platform.name %>
-    <% end %>
-  </h2>
+  <% if @products.count != 0 %>
+    <h2>
+      Games Matching '<%= @search_value %>'
+      <% if @platform != nil %>
+        For the <%= @platform.name %>
+      <% end %>
+    </h2>
+  <% else %>
+    <h3>No Games found that match '<%= @search_value %>'</h3>
+  <% end %>
 <% end %>
 
 <ul>

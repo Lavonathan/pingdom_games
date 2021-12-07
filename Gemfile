@@ -66,3 +66,6 @@ gem 'devise'
 gem 'image_processing'
 
 gem 'kaminari'
+
+gem 'rubocop'
+gem 'rubocop-rails'
