@@ -7,14 +7,15 @@ class ProductsController < ApplicationController
     puts "good 1"
     # Search based on game name.
     begin
-
-      if params[:platform] != nil && params[:platform] != "Console"
+      if !params[:platform].nil? && params[:platform] != "Console"
         begin
           @platform = Platform.includes(:products).find(params[:platform])
-          @product_total = @platform.products.where("name LIKE ?", @wildcard_search).page(params[:page]).per(10)
-        rescue
+          @product_total = @platform.products.where("name LIKE ?",
+                                                    @wildcard_search).page(params[:page]).per(10)
+        rescue StandardError
           @platform = nil
-          @product_total = Product.where("name LIKE ?", @wildcard_search).page(params[:page]).per(10)
+          @product_total = Product.where("name LIKE ?",
+                                         @wildcard_search).page(params[:page]).per(10)
         end
       else
         @platform = nil
