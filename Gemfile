@@ -69,3 +69,6 @@ gem 'kaminari'
 
 gem 'rubocop'
 gem 'rubocop-rails'
+
+# Authentication
+gem 'devise'
