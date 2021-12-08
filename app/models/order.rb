@@ -1,5 +1,5 @@
 class Order < ApplicationRecord
-  belongs_to :customer
+  belongs_to :user
   has_many :product_orders
   has_many :products, through: :product_orders
   validates :order_no, presence: true, uniqueness: true

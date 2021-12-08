@@ -18,6 +18,11 @@
   </div>
 
   <div class="field">
+    <%= f.label :province %><br />
+    <%= f.collection_select :province_id, Province.all, :id, :name, {:prompt => '-- Select a Province --'} %>
+  <div>
+
+  <div class="field">
     <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
     <%= f.password_field :password, autocomplete: "new-password" %>
     <% if @minimum_password_length %>
