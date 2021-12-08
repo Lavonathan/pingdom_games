@@ -4,6 +4,12 @@ TODO:
   ✅ Add provinces to active admin to edit taxes (for marks)
   ✅ Get images uploaded for all products.
 
+  Get active admin working to modify references.
+
+  Add screenshots to the games show pages.
+      Will need to update seed file to get screenshots.
+      Will also need to create screenshot model.
+
   ✅ add is_numeric validations to models.
 
   ✅ Have a main page to view products.
@@ -12,13 +18,13 @@ TODO:
 
   Create footer
 
-  Create search functionality
+  ✅ Create search functionality
 
   Have an about page
 
 
-  Add user login with devise
-  Make provinces a dropdown for users when registering.
+  ✅ Add user login with devise
+  ✅ Make provinces a dropdown for users when registering.
   Get add to cart working
 
 

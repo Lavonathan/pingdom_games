@@ -8,6 +8,8 @@ class Product < ApplicationRecord
   has_many :orders, through: :product_orders
   validates :name, :game_id, presence: true, uniqueness: true
   validates :price, numericality: true
-
   has_one_attached :image
+
+  accepts_nested_attributes_for :product_genres, allow_destroy: true
+  accepts_nested_attributes_for :product_platforms, allow_destroy: true
 end
