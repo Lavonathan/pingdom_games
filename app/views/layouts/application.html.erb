@@ -19,10 +19,7 @@
     </h1>
 
     <!--<%= debug cart %>-->
-    <% if flash[:notice] %>
-      <p><%= flash[:notice] %></p>
-    <% end %>
-
+    <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
     <ul>
@@ -34,6 +31,27 @@
         <li><%= link_to 'Sign Up', new_user_registration_path %></li>
       <% end %>
     </ul>
+
+    <details>
+      <summary>
+          <%= link_to image_tag("cart.jpg", width:60), root_path %>
+          Cart
+          <% if cart.present? %>
+            <sup><%= cart.size %></sup>
+          <% end %>
+      </summary>
+      <% if cart.present? %>
+        <ul>
+          <% cart.each do |product| %>
+            <li>
+              <%= product.name %> <%= link_to '❌', cart_path(product), method: :delete %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>No items in your cart.</p>
+      <% end %>
+    </details>
 
     <nav>
       <%= link_to 'Games', products_path %>
@@ -49,8 +67,12 @@
         <% end %>
       </div>
     </nav>
-
     <hr>
+
+    <% if flash[:notice] %>
+      <p><%= flash[:notice] %></p>
+      <hr>
+    <% end %>
     <%= yield %>
   </body>
 </html>

@@ -12,16 +12,23 @@
   <h2>This game has a score of: <%= @product.general_rating %> / 5</h2>
 <% end %>
 
-<% if cart.include?(@product) %>
-  <%= button_to cart_path(@product), method: :delete do %>
-    Remove From Cart
-  <% end %>
-<% else %>
-  <%= form_with  url: cart_index_path, method: :post do %>
-    <%= hidden_field_tag(:id, @product.id) %>
+<%= form_with  url: cart_index_path, method: :post do %>
+  <%= hidden_field_tag(:id, @product.id) %>
+  <% if cart.include?(@product) %>
+    <%= button_tag 'Update Cart' %>
+  <% else %>
     <%= button_tag 'Add to Cart' %>
   <% end %>
+  <%= number_field_tag(:quantity, nil, {min: 1, placeholder: 1, value: 1}) %>
 <% end %>
+
+<div>
+  <% if cart.include?(@product) %>
+    <%= button_to cart_path(@product), method: :delete do %>
+      Remove From Cart
+    <% end %>
+  <% end %>
+</div>
 
 <h3><%= 'Platform'.pluralize(@product.platforms.count) %>:</h3>
 <ul>
