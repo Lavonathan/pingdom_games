@@ -15,13 +15,13 @@
 
 <h3>Products: </h3>
 <table>
-  <% @order.product_orders.each do |product_order| %>
-    <tr>
+  <tr>
       <th>Title</th>
       <th>Quantity</th>
       <th>Game Price</th>
       <th>Sub Total</th>
     </tr>
+  <% @order.product_orders.each do |product_order| %>
     <tr>
       <td><%= product_order.product.name %></td>
       <td><%= product_order.quantity %></td>
@@ -29,4 +29,7 @@
       <td><%= number_with_precision (product_order.price * product_order.quantity), :precision => 2 %></td>
     </tr>
   <% end %>
+  <tr>
+    <td></td><td></td><td></td><td><u><%= number_with_precision @order.payment_amount_no_tax, :precision => 2 %></u></td>
+  </tr>
 </table>

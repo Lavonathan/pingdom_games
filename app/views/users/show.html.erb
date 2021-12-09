@@ -1,2 +1,5 @@
-<h1>List of orders for <%= current_user.user_name %></h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<h1><%= current_user.user_name %>'s Page</h1>
+<p><%= link_to 'View Order History', users_orders_path %></p>
+<p>Go to Cart</p>
+<p><%= link_to "Edit Account Info", edit_user_registration_path %></p>
+<p><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></p>

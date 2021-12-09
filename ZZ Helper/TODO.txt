@@ -30,8 +30,8 @@ TODO:
 
 
   Make it so you can save all the items to orders without stripe
-  Make a place where you can see a customers order history
-  Create an order show page that you get to from the above.
+  ✅ Make a place where you can see a customers order history
+  ✅ Create an order show page that you get to from the above.
 
 
   Finish the cart functionality so that you can add multiple quantities of items.
