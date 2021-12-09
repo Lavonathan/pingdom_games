@@ -13,8 +13,6 @@ ActiveAdmin.register Product do
   form do |f|
     f.semantic_errors # shows errors on :base
     f.inputs          # builds an input field for every attribute
-    # let's add this piece:
-
 
     f.inputs do
       f.has_many :product_genres, allow_destroy: true do |n_f|

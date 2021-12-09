@@ -4,6 +4,7 @@ TODO:
   ✅ Add provinces to active admin to edit taxes (for marks)
   ✅ Get images uploaded for all products.
 
+  Add images for users.
   Get active admin working to modify references.
 
   Add screenshots to the games show pages.
