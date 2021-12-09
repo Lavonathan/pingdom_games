@@ -1,0 +1,42 @@
+<h1>List of Orders For <%= current_user.user_name %></h1>
+
+<% if @orders.count != 0 %>
+  <table>
+    <tr>
+      <th>Order Number</th>
+      <th>Subtotal</th>
+      <th>Total</th>
+      <% if current_user.province.GST != 0 %>
+        <th>GST</th>
+      <% end %>
+      <% if current_user.province.HST != 0 %>
+        <th>HST</th>
+      <% end %>
+      <% if current_user.province.PST != 0 %>
+        <th>PST</th>
+      <% end %>
+      <th>Pay Date</th>
+    </tr>
+    <!--List of orders-->
+    <% @orders.each do | order | %>
+      <tr>
+        <td><%= link_to order.order_no, order %></td>
+        <td><%= number_with_precision order.payment_amount_no_tax, :precision => 2 %></td>
+        <td><%= number_with_precision order.payment_total, :precision => 2  %></td>
+        <% if order.GST != 0 %>
+          <td><%= number_with_precision order.GST, :precision => 2 %></td>
+        <% end %>
+        <% if order.HST != 0 %>
+          <td><%= number_with_precision order.HST, :precision => 2 %></td>
+        <% end %>
+        <% if order.PST != 0 %>
+          <td><%= number_with_precision order.PST, :precision => 2 %></td>
+        <% end %>
+        <td><%= order.pay_date %></td>
+      </tr>
+      <tr>
+    <% end %>
+  <table>
+<% else %>
+  <p>There are no orders for <%= current_user.user_name %></p>
+<% end %>

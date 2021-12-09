@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # get 'orders/show'
+  get 'users/show'
+  get 'users/orders'
   devise_for :users
   # get 'publishers/index'
   # get 'publishers/show'
@@ -12,6 +15,8 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   root to: 'products#index'
+
+  resources :orders, only: [:show]
 
   resources :products, only: [:index, :show]
   # get "/products", to: "products#index", as: "products" #products_path

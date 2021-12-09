@@ -1,0 +1,32 @@
+<h1>Order <%= @order.order_no %></h1>
+
+<p>Subtotal: <%= number_with_precision @order.payment_amount_no_tax, :precision => 2 %></p>
+<p>Total: <%= number_with_precision @order.payment_total, :precision => 2  %></p>
+<% if current_user.province.GST != 0 %>
+  <p>GST: <%= number_with_precision @order.GST, :precision => 2 %></p>
+<% end %>
+<% if current_user.province.HST != 0 %>
+  <p>HST: <%= number_with_precision @order.HST, :precision => 2 %></p>
+<% end %>
+<% if current_user.province.PST != 0 %>
+  <p>PST: <%= number_with_precision @order.PST, :precision => 2 %></p>
+<% end %>
+  <p>Pay Date: <%= @order.pay_date %></p>
+
+<h3>Products: </h3>
+<table>
+  <% @order.product_orders.each do |product_order| %>
+    <tr>
+      <th>Title</th>
+      <th>Quantity</th>
+      <th>Game Price</th>
+      <th>Sub Total</th>
+    </tr>
+    <tr>
+      <td><%= product_order.product.name %></td>
+      <td><%= product_order.quantity %></td>
+      <td><%= number_with_precision product_order.price, :precision => 2 %></td>
+      <td><%= number_with_precision (product_order.price * product_order.quantity), :precision => 2 %></td>
+    </tr>
+  <% end %>
+</table>

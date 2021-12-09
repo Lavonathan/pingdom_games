@@ -5,7 +5,7 @@ TODO:
   ✅ Get images uploaded for all products.
 
   Add images for users.
-  Get active admin working to modify references.
+  ✅ Get active admin working to modify references.
 
   Add screenshots to the games show pages.
       Will need to update seed file to get screenshots.
