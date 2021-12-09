@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   resources :orders, only: [:show]
 
+  resources :cart, only: [:create, :destroy]
+
   resources :products, only: [:index, :show]
   # get "/products", to: "products#index", as: "products" #products_path
   # get "/products/:id", to: "products#show", as: "product" #product_path

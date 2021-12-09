@@ -18,7 +18,11 @@
       </div>
     </h1>
 
-    <p class="notice"><%= notice %></p>
+    <!--<%= debug cart %>-->
+    <% if flash[:notice] %>
+      <p><%= flash[:notice] %></p>
+    <% end %>
+
     <p class="alert"><%= alert %></p>
 
     <ul>
