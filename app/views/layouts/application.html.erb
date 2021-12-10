@@ -19,7 +19,6 @@
     </h1>
 
     <!--<%= debug cart %>-->
-    <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
     <ul>
@@ -34,7 +33,7 @@
 
     <details>
       <summary>
-          <%= link_to image_tag("cart.jpg", width:60), root_path %>
+          <%= link_to image_tag("cart.jpg", width:60), cart_show_path %>
           Cart
           <% if cart.present? %>
             <sup><%= cart.size %></sup>
@@ -70,7 +69,7 @@
     <hr>
 
     <% if flash[:notice] %>
-      <p><%= flash[:notice] %></p>
+      <p><%= flash[:notice][0] %></p>
       <hr>
     <% end %>
     <%= yield %>

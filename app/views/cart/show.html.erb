@@ -1,0 +1,72 @@
+<h1>Cart</h1>
+
+<% if @products.count != 0 %>
+  <table>
+    <tr>
+      <td></td>
+      <th>Product Title</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <td></td><td></td>
+      <th>Subtotal</th>
+      <% if current_user.province.GST != 0 %>
+        <th>GST</th>
+      <% end %>
+      <% if current_user.province.HST != 0 %>
+        <th>HST</th>
+      <% end %>
+      <% if current_user.province.PST != 0 %>
+        <th>PST</th>
+      <% end %>
+
+    </tr>
+    <% @products.each do |product| %>
+      <% subtotal = product.price * @cart["#{product.id}"] %>
+      <tr>
+        <td><%= link_to '❌', cart_path(product), method: :delete %></td>
+        <td><%= product.name %></td>
+        <td><%= product.price %></td>
+        <td><%= @cart["#{product.id}"] %></td> <!-- Quantity -->
+        <td>
+          <%= form_with  url: cart_index_path, method: :post do %>
+            <%= hidden_field_tag(:id, product.id) %>
+            <%= hidden_field_tag(:quantity, @cart["#{product.id}"] + 1) %>
+            <% if cart.include?(product) %>
+              <%= button_tag '➕' %>
+            <% end %>
+          <% end %>
+        </td>
+        <td>
+          <%= form_with  url: cart_index_path, method: :post do %>
+            <%= hidden_field_tag(:id, product.id) %>
+            <%= hidden_field_tag(:quantity, @cart["#{product.id}"] - 1) %>
+            <% if @cart["#{product.id}"] > 1 %>
+              <%= button_tag '➖' %>
+            <% end %>
+          <% end %>
+        </td>
+        <td><%= (subtotal).round(2) %></td>
+        <td></td>
+        <td></td>
+      </tr>
+    <% end %>
+    <tr>
+    <td></td><td></td><td></td>
+      <td></td><td></td><td></td><td> <%= @subtotal_all_products.round(2) %></td>
+      <% if @gst != 0 %>
+          <td><%= (@subtotal_all_products * @gst).round(2) %></td>
+        <% end %>
+        <% if @hst != 0 %>
+          <td><%= (@subtotal_all_products * @hst).round(2) %></td>
+        <% end %>
+        <% if @pst != 0 %>
+          <td><%= (@subtotal_all_products * @pst).round(2) %></td>
+        <% end %>
+    </tr>
+  </table>
+  <hr>
+  <h3>Total: <%= number_to_currency(@total) %></h3>
+
+<% else %>
+  <h3>There are no products in your cart. Get Shopping!</h3>
+<% end %>

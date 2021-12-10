@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 
   resources :cart, only: [:create, :destroy]
 
+  get 'cart/show'
+
   resources :products, only: [:index, :show]
   # get "/products", to: "products#index", as: "products" #products_path
   # get "/products/:id", to: "products#show", as: "product" #product_path
