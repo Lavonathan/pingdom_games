@@ -72,3 +72,5 @@ gem 'rubocop-rails'
 
 # Authentication
 gem 'devise'
+
+gem 'stripe'

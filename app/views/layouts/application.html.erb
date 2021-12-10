@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <script src="https://js.stripe.com/v3"></script>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -19,7 +20,6 @@
     </h1>
 
     <!--<%= debug cart %>-->
-    <p class="alert"><%= alert %></p>
 
     <ul>
       <% if user_signed_in? %>
@@ -68,10 +68,15 @@
     </nav>
     <hr>
 
-    <% if flash[:notice] && !current_page?('/cart/show') %>
-      <p><%= flash[:notice][0] %></p>
+    <% if flash[:notice] && (!current_page?('/cart/show') || flash[:notice][1] == -1) %>
+      <% if flash[:notice][1] == -1 || flash[:notice][1] == -2 %>
+        <p><%= flash[:notice][0] %></p>
+      <% else %>
+        <p><%= flash[:notice] %></p>
+      <% end %>
       <hr>
     <% end %>
+    <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
 </html>

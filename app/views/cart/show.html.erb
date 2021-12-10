@@ -85,8 +85,22 @@
     <%= submit_tag("Update", class: "button is-primary") %>
     <% end %>
   </div>
-  <p>Ship to: <%= text_field_tag(:address, nil, class: "input", value: current_user.address) %></p>
-  <p>Postal Code: <%= text_field_tag(:postal_code, nil, class: "input", value: current_user.postal_code) %></p>
+
+  <% if current_user != nil %>
+    <p>Ship to: <%= text_field_tag(:address, nil, class: "input", value: current_user.address) %></p>
+    <p>Postal Code: <%= text_field_tag(:postal_code, nil, class: "input", value: current_user.postal_code) %></p>
+
+    <%= form_with url: checkout_create_path, remote: true do %>
+      <%= hidden_field_tag(:total, @total) %>
+      <%= hidden_field_tag(:products, @products) %>
+      <%= hidden_field_tag(:gst, @gst_amount) %>
+      <%= hidden_field_tag(:hst, @hst_amount) %>
+      <%= hidden_field_tag(:pst, @pst_amount) %>
+      <%= button_tag 'Checkout' %>
+    <% end %>
+  <% else %>
+    <h2>Please sign in or sign up to check out your items.</h2>
+  <% end %>
 
 <% else %>
   <h3>There are no products in your cart. Get Shopping!</h3>

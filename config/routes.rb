@@ -38,6 +38,12 @@ Rails.application.routes.draw do
   resources :publishers, only: [:index, :show]
   # get "/publishers", to: "publishers#index", as: "publishers" #publishers_path
   # get "/publishers/:id", to: "publishers#show", as: "publisher" #publisher_path
+
+  scope "/checkout" do
+    post "create",  to: "checkout#create",  as: "checkout_create"
+    get  "success", to: "checkout#success", as: "checkout_success"
+    get  "cancel",  to: "checkout#cancel",  as: "checkout_cancel"
+  end
 end
 
 # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

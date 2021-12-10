@@ -7,3 +7,4 @@ Postman. Included below this is a test URL to use: https://web.postman.co/worksp
 TEST URL: https://rawg.io/api/games?page_size=2&page=1&key=c542e67aec3a4340908f9de9e86038af
 Webpacker Command: ./bin/webpack-dev-server
 Devise user creation: https://human-se.github.io/rails-demos-n-deets-2020/demo-devise-auth/
+Stripe proper login: PUBLISHABLE_KEY=pk_test_51JwDULEsN4rV7PaMUxNiefQN13dzG7GD04OeOF241GBwYEY1oLufPB7mjx51U7EXvnw2C9LgFjvFb5GEXI175W0p00h7dA6ZQY SECRET_KEY=sk_test_51JwDULEsN4rV7PaMqKlT0FWVrjIxSyd5VkKO0iYxvoZ1QxnTH9brSuyf6wbuHWbxs9oVWw1B2xIRMT84sJzHwyhV00QszvmD2u rails s

@@ -11,7 +11,7 @@ class CartController < ApplicationController
 
     session[:shopping_cart][product_id] = quantity
 
-    flash[:notice] = ["➕#{quantity} #{'copy'.pluralize(quantity)} of #{product.name} #{quantity > 1 ? 'are' : 'is'} in the cart.", product.id]
+    flash[:notice] = ["➕#{quantity} #{'copy'.pluralize(quantity)} of #{product.name} #{quantity > 1 ? 'are' : 'is'} in the cart.", -2]
 
     redirect_back(fallback_location: root_path)
   end
@@ -23,7 +23,7 @@ class CartController < ApplicationController
     id = params[:id]
     session[:shopping_cart].delete(id)
     product = Product.find(id)
-    flash[:notice] = ["➖ #{product.name} removed from cart.", product.id]
+    flash[:notice] = ["➖ #{product.name} removed from cart.", -2]
     redirect_back(fallback_location: root_path)
   end
 
@@ -43,10 +43,10 @@ class CartController < ApplicationController
     end
 
     # Calculate total
-    gst = subtotal_all_products * @gst.round(2)
-    hst = subtotal_all_products * @hst.round(2)
-    pst = subtotal_all_products * @pst.round(2)
-    @total = subtotal_all_products + gst + hst + pst
+    @gst_amount = subtotal_all_products * @gst.round(2)
+    @hst_amount = subtotal_all_products * @hst.round(2)
+    @pst_amount = subtotal_all_products * @pst.round(2)
+    @total = (subtotal_all_products + @gst_amount + @hst_amount + @pst_amount).round(2)
     @subtotal_all_products = subtotal_all_products
   end
 

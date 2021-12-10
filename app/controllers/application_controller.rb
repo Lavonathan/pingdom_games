@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
      def initialize_session
           session[:shopping_cart] ||= {} #empty hash of product IDs
-          session[:cart_province] ||= current_user.province
+          session[:cart_province] ||= current_user != nil ? current_user.province : Province.first
      end
 
      def cart

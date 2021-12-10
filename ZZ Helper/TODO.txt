@@ -26,7 +26,7 @@ TODO:
 
   ✅ Add user login with devise
   ✅ Make provinces a dropdown for users when registering.
-  Get add to cart working
+  ✅ Get add to cart working
 
 
   Make it so you can save all the items to orders without stripe
