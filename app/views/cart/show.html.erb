@@ -87,10 +87,15 @@
   </div>
 
   <% if current_user != nil %>
-    <p>Ship to: <%= text_field_tag(:address, nil, class: "input", value: current_user.address) %></p>
-    <p>Postal Code: <%= text_field_tag(:postal_code, nil, class: "input", value: current_user.postal_code) %></p>
 
     <%= form_with url: checkout_create_path, remote: true do %>
+      <div id="address_label">
+        <label for="address">Ship To: </label>
+        <%= text_field_tag(:address, nil, class: "input", value: current_user.address) %></div>
+      <div id="Postal_code_label">
+        <label for="postal_code">Postal Code:</label>
+        <%= text_field_tag(:postal_code, nil, class: "input", value: current_user.postal_code) %>
+      </div>
       <%= hidden_field_tag(:total, @total) %>
       <%= hidden_field_tag(:products, @products.pluck(:id)) %>
       <%= hidden_field_tag(:gst, @gst_amount) %>

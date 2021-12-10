@@ -7,6 +7,8 @@ class CheckoutController < ApplicationController
     @gst = params[:gst].to_f.round(2)
     @hst = params[:hst].to_f.round(2)
     @pst = params[:pst].to_f.round(2)
+    @address = params[:address]
+    @postal_code = params[:postal_code]
 
     if @products.nil? || @total < 0 || @gst < 0 || @pst < 0 || @hst < 0
       flash[:notice] = ["There has been an error with checkout. Please contact administrator.", -1]
@@ -68,8 +70,9 @@ class CheckoutController < ApplicationController
     @session = Stripe::Checkout::Session.create(
       #went to stripe API, looked up sessions, figured it all out..
       payment_method_types: ["card"],
-      success_url: checkout_success_url,
+      success_url: checkout_success_url + "?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: checkout_cancel_url,
+      customer_email: current_user.email,
       line_items: line_item_array
     )
 
@@ -79,17 +82,22 @@ class CheckoutController < ApplicationController
     # respond_to do |format|
     #   format.js
     # end
-
-    # Establish a connection with Stripe.
-
-    # redirect to the stripe payment screen.
   end
 
   def success
-    # WE TOOK THEIR MONEY!
+    #stripe success_url +"?session_id={CHECKOUT_SESSION_ID}"
+    # when stripe redirects back to server... it will append this session_id  through GET params!
+    @session = Stripe::Checkout::Session.retrieve(params[:session_id])
+    @paid_flag = @session["payment_status"]
+
+    if(@paid_flag != "paid")
+      flash[:notice] = ["There was an error with the payment.", -1]
+      redirect_to cart_show_path
+    end
   end
 
   def cancel
-    # something went wrong :(
+    flash[:notice] = ["You have cancelled the payment.", -1]
+    redirect_to cart_show_path
   end
 end
