@@ -43,7 +43,7 @@
         <ul>
           <% cart.each do |product| %>
             <li>
-              <%= session[:shopping_cart]["#{product.id}"] %> X <%= product.name %> <%= link_to '❌', cart_path(product), method: :delete %>
+              <%= session[:shopping_cart]["#{product.id}"] %> X <%= link_to product.name, product %> <%= link_to '❌', cart_path(product), method: :delete %>
             </li>
           <% end %>
         </ul>
@@ -68,7 +68,7 @@
     </nav>
     <hr>
 
-    <% if flash[:notice] %>
+    <% if flash[:notice] && !current_page?('/cart/show') %>
       <p><%= flash[:notice][0] %></p>
       <hr>
     <% end %>

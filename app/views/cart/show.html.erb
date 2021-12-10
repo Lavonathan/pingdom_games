@@ -24,7 +24,7 @@
       <% subtotal = product.price * @cart["#{product.id}"] %>
       <tr>
         <td><%= link_to '❌', cart_path(product), method: :delete %></td>
-        <td><%= product.name %></td>
+        <td><%= link_to product.name, product %></td>
         <td><%= product.price %></td>
         <td><%= @cart["#{product.id}"] %></td> <!-- Quantity -->
         <td>
@@ -46,14 +46,24 @@
           <% end %>
         </td>
         <td><%= (subtotal).round(2) %></td>
-        <td></td>
-        <td></td>
+        <% if @products.count == 1%>
+          <% if @gst != 0 %>
+            <td><%= (@subtotal_all_products * @gst).round(2) %></td>
+          <% end %>
+          <% if @hst != 0 %>
+            <td><%= (@subtotal_all_products * @hst).round(2) %></td>
+          <% end %>
+          <% if @pst != 0 %>
+            <td><%= (@subtotal_all_products * @pst).round(2) %></td>
+          <% end %>
+        <% end %>
       </tr>
     <% end %>
     <tr>
-    <td></td><td></td><td></td>
-      <td></td><td></td><td></td><td> <%= @subtotal_all_products.round(2) %></td>
-      <% if @gst != 0 %>
+      <% if @products.count > 1%>
+        <td></td><td></td><td></td>
+        <td></td><td></td><td></td><td> <%= @subtotal_all_products.round(2) %></td>
+        <% if @gst != 0 %>
           <td><%= (@subtotal_all_products * @gst).round(2) %></td>
         <% end %>
         <% if @hst != 0 %>
@@ -62,6 +72,7 @@
         <% if @pst != 0 %>
           <td><%= (@subtotal_all_products * @pst).round(2) %></td>
         <% end %>
+      <% end %>
     </tr>
   </table>
   <hr>
