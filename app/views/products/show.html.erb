@@ -16,10 +16,11 @@
   <%= hidden_field_tag(:id, @product.id) %>
   <% if cart.include?(@product) %>
     <%= button_tag 'Update Cart' %>
+    <%= number_field_tag(:quantity, nil, {min: 1, value: session[:shopping_cart]["#{@product.id}"].to_i}) %>
   <% else %>
     <%= button_tag 'Add to Cart' %>
+    <%= number_field_tag(:quantity, nil, {min: 1, placeholder: 1, value: 1}) %>
   <% end %>
-  <%= number_field_tag(:quantity, nil, {min: 1, placeholder: 1, value: 1}) %>
 <% end %>
 
 <div>

@@ -6,12 +6,12 @@ class ApplicationController < ActionController::Base
 
      def initialize_session
           #this will initialize the visit count to zero for new users.
-          session[:shopping_cart] ||= [] #empty array of product IDs
+          session[:shopping_cart] ||= {} #empty array of product IDs
      end
 
      def cart
           #you can pass an array of ids, and you'll get back a collection!
-          Product.find(session[:shopping_cart])
+          Product.find(session[:shopping_cart].keys)
           #pass an array of product id's.. get a collection of products!
      end
 

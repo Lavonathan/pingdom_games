@@ -9,9 +9,9 @@ class CartController < ApplicationController
     logger.debug("Adding #{product_id} to cart.")
     product = Product.find(product_id)
 
-    session[:shopping_cart] << product_id
+    session[:shopping_cart][product_id] = quantity
 
-    flash[:notice] = "➕#{quantity} #{'copy'.pluralize(quantity)} of  #{product.name} added to cart."
+    flash[:notice] = "➕#{quantity} #{'copy'.pluralize(quantity)} of #{product.name} are in cart."
 
     redirect_back(fallback_location: root_path)
   end
@@ -20,8 +20,7 @@ class CartController < ApplicationController
   def destroy
     # removes params[:id] from cart
     logger.debug("Removing #{params[:id]} from cart.")
-    id = params[:id].to_i
-    puts "HI HI HI #{session[:shopping_cart]}"
+    id = params[:id]
     session[:shopping_cart].delete(id)
     product = Product.find(id)
     flash[:notice] = "➖ #{product.name} removed from cart."
