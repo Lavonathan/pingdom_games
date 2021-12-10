@@ -5,8 +5,8 @@ class ApplicationController < ActionController::Base
      private
 
      def initialize_session
-          #this will initialize the visit count to zero for new users.
-          session[:shopping_cart] ||= {} #empty array of product IDs
+          session[:shopping_cart] ||= {} #empty hash of product IDs
+          session[:cart_province] ||= current_user.province
      end
 
      def cart

@@ -9,13 +9,13 @@
       <th>Quantity</th>
       <td></td><td></td>
       <th>Subtotal</th>
-      <% if current_user.province.GST != 0 %>
+      <% if @gst != 0 %>
         <th>GST</th>
       <% end %>
-      <% if current_user.province.HST != 0 %>
+      <% if @hst != 0 %>
         <th>HST</th>
       <% end %>
-      <% if current_user.province.PST != 0 %>
+      <% if @pst != 0 %>
         <th>PST</th>
       <% end %>
 
@@ -77,6 +77,16 @@
   </table>
   <hr>
   <h3>Total: <%= number_to_currency(@total) %></h3>
+
+  <div id="update province">
+    <%= form_with(url: cart_updated_province_path, method: :get, local: true) do %>
+    <label>Province: </label>
+    <%= collection_select(:id, :province_id, Province.all, :id, :name, selected: @cart_province)  %>
+    <%= submit_tag("Update", class: "button is-primary") %>
+    <% end %>
+  </div>
+  <p>Ship to: <%= text_field_tag(:address, nil, class: "input", value: current_user.address) %></p>
+  <p>Postal Code: <%= text_field_tag(:postal_code, nil, class: "input", value: current_user.postal_code) %></p>
 
 <% else %>
   <h3>There are no products in your cart. Get Shopping!</h3>

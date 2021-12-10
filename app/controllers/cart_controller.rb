@@ -30,10 +30,11 @@ class CartController < ApplicationController
   def show
     @products = Product.find(session[:shopping_cart].keys)
     @cart = session[:shopping_cart]
-    @gst = (current_user.province.GST.to_f / 100).round(2)
-    @pst = (current_user.province.PST.to_f / 100).round(2)
-    @hst = (current_user.province.HST.to_f / 100).round(2)
-
+    @cart_province = session[:cart_province]["id"]
+    cart_province = session[:cart_province]
+    @gst = (cart_province["GST"].to_f / 100).round(2)
+    @pst = (cart_province["PST"].to_f / 100).round(2)
+    @hst = (cart_province["HST"].to_f / 100).round(2)
     subtotal_all_products = 0
 
     @products.each do |product|
@@ -47,5 +48,14 @@ class CartController < ApplicationController
     pst = subtotal_all_products * @pst.round(2)
     @total = subtotal_all_products + gst + hst + pst
     @subtotal_all_products = subtotal_all_products
+  end
+
+  def update_province
+    province_id = params[:id]["province_id"]
+
+    if(province_id != 0 && province_id != nil)
+      session[:cart_province] = Province.find(province_id.to_i)
+    end
+    redirect_back(fallback_location: root_path)
   end
 end
