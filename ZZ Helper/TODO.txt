@@ -29,12 +29,15 @@ TODO:
   ✅ Get add to cart working
 
 
-  Make it so you can save all the items to orders without stripe
+  ✅ Make it so you can save all the items to orders without stripe
   ✅ Make a place where you can see a customers order history
   ✅ Create an order show page that you get to from the above.
 
+  Add column to order to determine if its been paid or not.
+  ✅ Show summary after order is complete
+  Allow console selection for product orders
 
-  Finish the cart functionality so that you can add multiple quantities of items.
-  Add stripe functionality.
+  ✅ Finish the cart functionality so that you can add multiple quantities of items.
+  ✅ Add stripe functionality.
 
   Do the visuals

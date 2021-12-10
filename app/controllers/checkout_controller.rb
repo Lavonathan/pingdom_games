@@ -3,6 +3,7 @@ class CheckoutController < ApplicationController
     products = params[:products].split(" ")
     @products = Product.includes(:publisher).find(products)
 
+    @subtotal = params[:subtotal].to_f.round(2)
     @total = params[:total].to_f.round(2)
     @gst = params[:gst].to_f.round(2)
     @hst = params[:hst].to_f.round(2)
@@ -15,10 +16,19 @@ class CheckoutController < ApplicationController
       redirect_to cart_show_path
     end
 
-    # Calculate and create hashes of all the line items.
+    order = Order.create(order_no: Order.last.order_no + 1, payment_amount_no_tax: @subtotal, GST: @gst, HST: @hst, PST: @pst,
+    payment_total: @total, pay_date: Date.current, user: current_user)
+
+    session[:order_created] = order.id
+    # Calculate and create hashes of all the line items. Also create product orders
     line_item_array = []
 
     @products.each do |product|
+
+      # Create product order
+      ProductOrder.create(product: product, order: order, quantity: session[:shopping_cart][product.id.to_s],
+                    price: product.price)
+
       product_hash = {
         name: product.name,
         description: "Game published by #{product.publisher.name}",
@@ -90,10 +100,15 @@ class CheckoutController < ApplicationController
     @session = Stripe::Checkout::Session.retrieve(params[:session_id])
     @paid_flag = @session["payment_status"]
 
-    if(@paid_flag != "paid")
+    if(@paid_flag != "paid" || session[:order_created] == nil)
       flash[:notice] = ["There was an error with the payment.", -1]
       redirect_to cart_show_path
     end
+
+    session[:shopping_cart] = {}
+    session[:cart_province] = current_user != nil ? current_user.province : Province.first
+    flash[:notice] = ["Succes! We have received your payment.", -1]
+    redirect_to controller: 'orders', action: 'show', id: session[:order_created].to_i
   end
 
   def cancel

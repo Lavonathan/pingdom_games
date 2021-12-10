@@ -97,6 +97,7 @@
         <%= text_field_tag(:postal_code, nil, class: "input", value: current_user.postal_code) %>
       </div>
       <%= hidden_field_tag(:total, @total) %>
+      <%= hidden_field_tag(:subtotal, @subtotal_all_products) %>
       <%= hidden_field_tag(:products, @products.pluck(:id)) %>
       <%= hidden_field_tag(:gst, @gst_amount) %>
       <%= hidden_field_tag(:hst, @hst_amount) %>
@@ -104,7 +105,7 @@
       <%= button_tag 'Checkout' %>
     <% end %>
   <% else %>
-    <h2>Please sign in or sign up to check out your items.</h2>
+    <h2>Please <%= link_to 'Sign In', new_user_session_path %> or <%= link_to 'Sign Up', new_user_registration_path %> to check out your items.</h2>
   <% end %>
 
 <% else %>
