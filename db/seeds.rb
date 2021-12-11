@@ -224,7 +224,7 @@ hst_amount = product_price * User.first.province.HST / 100
 pst_amount = product_price * User.first.province.PST / 100
 payment_total = payment_no_tax + gst_amount + hst_amount + pst_amount
 
-test_order = Order.create(order_no: 123, payment_amount_no_tax: payment_no_tax, GST: gst_amount, HST: hst_amount, PST: pst_amount,
+test_order = Order.create(order_no: -1, payment_amount_no_tax: payment_no_tax, status: "NEW", province: Province.first, GST: gst_amount, HST: hst_amount, PST: pst_amount,
                           payment_total: payment_total, pay_date: Date.current, user: User.first)
 
 ### Creating test product order

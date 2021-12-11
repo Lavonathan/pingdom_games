@@ -1,5 +1,6 @@
 <h1>Order <%= @order.order_no %></h1>
 
+<p>Status: <%= @order.status %></p>
 <p>Subtotal: <%= number_with_precision @order.payment_amount_no_tax, :precision => 2 %></p>
 <p>Total: <%= number_with_precision @order.payment_total, :precision => 2  %></p>
 <% if current_user.province.GST != 0 %>
@@ -11,7 +12,10 @@
 <% if current_user.province.PST != 0 %>
   <p>PST: <%= number_with_precision @order.PST, :precision => 2 %></p>
 <% end %>
-  <p>Pay Date: <%= @order.pay_date %></p>
+<p>Pay Date: <%= @order.pay_date %></p>
+<% if @order.address != nil %>
+  <p>Shipped to: <%= @order.address %></p>
+<% end %>
 
 <h3>Products: </h3>
 <table>
@@ -23,13 +27,15 @@
     </tr>
   <% @order.product_orders.each do |product_order| %>
     <tr>
-      <td><%= product_order.product.name %></td>
+      <td><%= link_to product_order.product.name, product_order.product %></td>
       <td><%= product_order.quantity %></td>
       <td><%= number_with_precision product_order.price, :precision => 2 %></td>
       <td><%= number_with_precision (product_order.price * product_order.quantity), :precision => 2 %></td>
     </tr>
   <% end %>
-  <tr>
-    <td></td><td></td><td></td><td><u><%= number_with_precision @order.payment_amount_no_tax, :precision => 2 %></u></td>
-  </tr>
+  <% if @order.product_orders.count > 1 %>
+    <tr>
+      <td></td><td></td><td></td><td><u><%= number_with_precision @order.payment_amount_no_tax, :precision => 2 %></u></td>
+    </tr>
+  <% end %>
 </table>

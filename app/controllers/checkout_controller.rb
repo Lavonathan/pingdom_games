@@ -3,6 +3,7 @@ class CheckoutController < ApplicationController
     products = params[:products].split(" ")
     @products = Product.includes(:publisher).find(products)
 
+    @cart_province = session[:cart_province]["id"]
     @subtotal = params[:subtotal].to_f.round(2)
     @total = params[:total].to_f.round(2)
     @gst = params[:gst].to_f.round(2)
@@ -16,8 +17,9 @@ class CheckoutController < ApplicationController
       redirect_to cart_show_path
     end
 
-    order = Order.create(order_no: Order.last.order_no + 1, payment_amount_no_tax: @subtotal, GST: @gst, HST: @hst, PST: @pst,
-    payment_total: @total, pay_date: Date.current, user: current_user)
+    order = Order.create(order_no: Order.last.order_no + 1, payment_amount_no_tax: @subtotal, GST: @gst, HST: @hst, PST: @pst, province: Province.find(@cart_province),
+                          payment_total: @total, pay_date: Date.current, user: current_user, address:current_user.address,
+                          status: "NEW", postal_code:current_user.postal_code)
 
     session[:order_created] = order.id
     # Calculate and create hashes of all the line items. Also create product orders
@@ -105,6 +107,11 @@ class CheckoutController < ApplicationController
       redirect_to cart_show_path
     end
 
+    # Update the order to paid
+    order = Order.find(session[:order_created].to_i)
+    order.status = "PAID"
+    order.save
+
     session[:shopping_cart] = {}
     session[:cart_province] = current_user != nil ? current_user.province : Province.first
     flash[:notice] = ["Succes! We have received your payment.", -1]
@@ -113,6 +120,10 @@ class CheckoutController < ApplicationController
 
   def cancel
     flash[:notice] = ["You have cancelled the payment.", -1]
+
+    order = Order.find(session[:order_created].to_i)
+    order.status = "CANCELLED"
+    order.save
     redirect_to cart_show_path
   end
 end

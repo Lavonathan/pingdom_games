@@ -5,7 +5,7 @@ ActiveAdmin.register Order do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :order_no, :payment_amount_no_tax, :GST, :HST, :PST, :payment_total, :pay_date,
+  permit_params :order_no, :payment_amount_no_tax, :GST, :HST, :PST, :payment_total, :pay_date, :address, :postal_code, :status,
                 :user_id, product_orders_attributes: [:id, :product_id, :order_id, :quantity, :price, :_destroy]
 
   form do |f|
