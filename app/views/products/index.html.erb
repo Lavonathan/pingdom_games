@@ -13,10 +13,6 @@
   <% end %>
 <% end %>
 
-<ul>
-  <% @products.each do | product | %>
-    <li> <%= link_to product.name, product %></li>
-  <% end %>
-</ul>
+<%= render @products %>
 
 <%= paginate @products %>

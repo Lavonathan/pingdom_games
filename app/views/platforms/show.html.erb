@@ -1,10 +1,7 @@
 <h1><%= @platform.name %></h1>
 <hr>
 <h2>Games on <%= @platform.name %></h2>
-<ul>
-  <% @products.each do | product | %>
-    <li> <%= link_to product.name, product %></li>
-  <% end %>
-</ul>
+
+<%= render @products %>
 
 <%= paginate @products %>

@@ -1,0 +1,44 @@
+<h2 class="title is-2">
+  <%= link_to product.name, product %>
+</h2>
+
+<%= product.image != nil ? image_tag(product.image, :size => "130x90") : product.name %>
+
+<progress class="progress is-info" value="<%= product.general_rating %>" max=5>
+  <%= product.general_rating %>
+</progress>
+<%= product.general_rating %>
+
+<p>
+  <strong>ESRB Rating: </strong>
+  <% if product.esrb_rating != nil %>
+    <%= product.esrb_rating %>
+  <% else %>
+    🚫
+  <% end %>
+</p>
+
+<p>
+  <strong>Price: </strong>
+  <%= product.price %>
+</p>
+
+<p>
+  <strong>Publisher: </strong>
+  <%= link_to product.publisher.name, product.publisher %>
+</p>
+
+<p>
+  <strong><%= 'Platform'.pluralize(product.platforms.count) %> </strong>
+  <% product.platforms.each do | platform | %>
+     <%= link_to platform.name, platform %>,
+  <% end %>
+</p>
+
+<p>
+  <strong><%= 'Genre'.pluralize(product.genres.count) %>:</strong>
+  <% product.genres.each do | genre | %>
+    <%= link_to genre.name, genre %>,
+  <% end %>
+</p>
+<hr>
